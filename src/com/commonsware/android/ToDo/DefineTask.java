@@ -11,7 +11,6 @@ public class DefineTask extends Activity {
     String taskname;
     Button btn;
     EditText task;
-    //String oldtaskname;
     String[] items;
     int position;
 
@@ -21,7 +20,6 @@ public class DefineTask extends Activity {
         setContentView(R.layout.task);
         btn=(Button)findViewById(R.id.done);
         task=(EditText)findViewById(R.id.taskname);
-        //oldtaskname=getIntent().getStringExtra("oldtaskname");
         position=getIntent().getExtras().getInt("position");
         items=getIntent().getExtras().getStringArray("items");
         task.setText(items[position]);
@@ -32,7 +30,6 @@ public class DefineTask extends Activity {
                 Intent returnStuff=new Intent();
                 items[position]=taskname;
                 returnStuff.putExtra("items", items);
-                //returnStuff.putExtra("taskname", taskname);
                 setResult(RESULT_OK, returnStuff);
                 finish();
             }

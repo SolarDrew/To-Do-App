@@ -13,6 +13,8 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import java.util.Calendar;
+import java.util.Date;
 
 public class ToDo extends ListActivity {
     TextView title;
@@ -21,6 +23,7 @@ public class ToDo extends ListActivity {
     int selected_num;
     private SharedPreferences prefs;
     String[] items;
+    String[] dates;
     public static final int ADD_ITEM=0;
     public static final int REMOVE_ITEM=1;
 
@@ -30,8 +33,12 @@ public class ToDo extends ListActivity {
         prefs=getSharedPreferences("lists", 0);
         int ntasks=prefs.getInt("num_tasks", 1);
         items=new String[ntasks];
+        dates=new String[ntasks];
         for (int i=0;i<items.length;i++) {
-            items[i]=prefs.getString(Integer.toString(i), "Fail");
+            items[i]=prefs.getString("task"+Integer.toString(i),
+                  "Fail");
+            dates[i]=prefs.getString("date"+Integer.toString(i),
+                  new Date().toString());
         };
         
         setContentView(R.layout.main);
@@ -49,7 +56,9 @@ public class ToDo extends ListActivity {
         SharedPreferences.Editor ed=prefs.edit();
         ed.putInt("num_tasks", items.length);
         for (int i=0;i<items.length;i++) {
-            ed.putString(Integer.toString(i), items[i]);
+            ed.putString("task"+Integer.toString(i), items[i]);
+            ed.putString("date"+Integer.toString(i), 
+                  dates[i].toString());
         }
         ed.commit();
     }
@@ -69,9 +78,6 @@ public class ToDo extends ListActivity {
                 items=data.getExtras().getStringArray("items");
                 setListAdapter(new ArrayAdapter<String>(this, 
                       android.R.layout.simple_list_item_1, items));
-                //String taskname=data.getStringExtra("taskname");
-                //selected.setText(taskname);
-                //items[selected_num]=taskname;
             }
         }
     }
@@ -103,7 +109,6 @@ public class ToDo extends ListActivity {
     
     private void populateMenu(Menu menu) {
         menu.add(Menu.NONE, ADD_ITEM, Menu.NONE, "Add task");
-        //menu.add(Menu.NONE, 1, Menu.NONE, "Second option");
     }
     
     private void populateContextMenu(Menu menu) {

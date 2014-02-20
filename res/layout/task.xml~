@@ -3,12 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:shrinkColumns="0">
+    android:stretchColumns="1">
     <TableRow>
         <TextView
-            android:text="Task to be completed:" />
+            android:text="Task to\nbe completed:" />
         <EditText
             android:id="@+id/taskname"/>
+    </TableRow>
+    <TableRow>
+        <TextView
+            android:text="Date to be\ncompleted by:"/>
+        <DatePicker
+            android:id="@+id/datepick"/>
     </TableRow>
     <TableRow>
         <Button
