@@ -12,9 +12,19 @@
     </TableRow>
     <TableRow>
         <TextView
+            android:id="@+id/testdate"
+            android:layout_span="2"/>
+    </TableRow>
+    <TableRow>
+        <TextView
+            android:id="@+id/testdateints"
+            android:layout_span="2"/>
+    </TableRow>
+    <TableRow>
+        <TextView
             android:text="Date to be\ncompleted by:"/>
         <DatePicker
-            android:id="@+id/datepick"/>
+            android:id="@+id/datepicker"/>
     </TableRow>
     <TableRow>
         <Button

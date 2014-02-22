@@ -13,7 +13,8 @@
     <TableRow>
         <TextView
             android:text="Date to be\ncompleted by:"/>
-        <DatePicker/>
+        <DatePicker
+            android:id="@+id/datepicker"/>
     </TableRow>
     <TableRow>
         <Button

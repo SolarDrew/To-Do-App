@@ -13,7 +13,8 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import java.util.Calendar;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ToDo extends ListActivity {
@@ -23,7 +24,10 @@ public class ToDo extends ListActivity {
     int selected_num;
     private SharedPreferences prefs;
     String[] items;
-    String[] dates;
+    Date[] dates;
+    String[] datestrings;
+    Date today=new Date();
+    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
     public static final int ADD_ITEM=0;
     public static final int REMOVE_ITEM=1;
 
@@ -33,12 +37,14 @@ public class ToDo extends ListActivity {
         prefs=getSharedPreferences("lists", 0);
         int ntasks=prefs.getInt("num_tasks", 1);
         items=new String[ntasks];
-        dates=new String[ntasks];
+        dates=new Date[ntasks];
         for (int i=0;i<items.length;i++) {
             items[i]=prefs.getString("task"+Integer.toString(i),
-                  "Fail");
-            dates[i]=prefs.getString("date"+Integer.toString(i),
-                  new Date().toString());
+                                     "Fail");
+            dates[i]=sdf.parse(
+                prefs.getString("date"+Integer.toString(i),
+                                sdf.format(today)),
+                new ParsePosition(0));
         };
         
         setContentView(R.layout.main);
@@ -58,7 +64,7 @@ public class ToDo extends ListActivity {
         for (int i=0;i<items.length;i++) {
             ed.putString("task"+Integer.toString(i), items[i]);
             ed.putString("date"+Integer.toString(i), 
-                  dates[i].toString());
+                         sdf.format(dates[i]));
         }
         ed.commit();
     }
@@ -68,6 +74,11 @@ public class ToDo extends ListActivity {
         Intent intent=new Intent(this, DefineTask.class);
         intent.putExtra("position", position);
         intent.putExtra("items", items);
+        datestrings=new String[dates.length];
+        for (int i=0; i<dates.length; i++) {
+            datestrings[i]=sdf.format(dates[i]);
+        };
+        intent.putExtra("dates", datestrings);
         startActivityForResult(intent, 1);
     }
     
@@ -76,6 +87,11 @@ public class ToDo extends ListActivity {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 items=data.getExtras().getStringArray("items");
+                datestrings=data.getExtras().getStringArray("dates");
+                for (int i=0; i<dates.length; i++) {
+                    dates[i]=sdf.parse(datestrings[i],
+                                       new ParsePosition(0));
+                };
                 setListAdapter(new ArrayAdapter<String>(this, 
                       android.R.layout.simple_list_item_1, items));
             }
@@ -119,15 +135,26 @@ public class ToDo extends ListActivity {
         switch (item.getItemId()) {
             case ADD_ITEM:
                 String[] temp=new String[items.length+1];
+                String[] datestrings=new String[dates.length+1];
+                Date[] temp2=new Date[dates.length+1];
                 for (int i=0;i<items.length;i++) {
                     temp[i]=items[i];
+                    temp2[i]=dates[i];
                 };
                 items=temp;
+                dates=temp2;
                 int position=items.length-1;
                 items[position]="New task";
+                dates[position]=new Date();
+                for (int i=0;i<items.length;i++) {
+                    datestrings[i]=sdf.format(dates[i]);
+                };
+                
                 Intent intent=new Intent(this, DefineTask.class);
                 intent.putExtra("position", position);
                 intent.putExtra("items", items);
+                intent.putExtra("dates", datestrings);
+                
                 startActivityForResult(intent, 1);
                 return(true);
             case REMOVE_ITEM:
@@ -135,15 +162,18 @@ public class ToDo extends ListActivity {
                       (AdapterView.AdapterContextMenuInfo)
                       item.getMenuInfo();
                 selected_num=info.position;
-                String[] temp1=new String[items.length-1];
+                String[] temptasks=new String[items.length-1];
+                Date[] tempdates1=new Date[dates.length-1];
                 int j=0;
                 for (int i=0; i<items.length; i++) {
                     if (i != selected_num) {
-                        temp1[j]=items[i];
+                        temptasks[j]=items[i];
+                        tempdates1[j]=dates[i];
                         j++;
                     };
                 };
-                items=temp1;
+                items=temptasks;
+                dates=tempdates1;
                 setListAdapter(new ArrayAdapter<String>(this, 
                       android.R.layout.simple_list_item_1, items));
         }
