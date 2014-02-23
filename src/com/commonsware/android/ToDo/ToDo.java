@@ -13,6 +13,9 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ToDo extends ListActivity {
     TextView title;
@@ -21,6 +24,10 @@ public class ToDo extends ListActivity {
     int selected_num;
     private SharedPreferences prefs;
     String[] items;
+    Date[] dates;
+    String[] datestrings;
+    Date today=new Date();
+    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
     public static final int ADD_ITEM=0;
     public static final int REMOVE_ITEM=1;
 
@@ -30,8 +37,14 @@ public class ToDo extends ListActivity {
         prefs=getSharedPreferences("lists", 0);
         int ntasks=prefs.getInt("num_tasks", 1);
         items=new String[ntasks];
+        dates=new Date[ntasks];
         for (int i=0;i<items.length;i++) {
-            items[i]=prefs.getString(Integer.toString(i), "Fail");
+            items[i]=prefs.getString("task"+Integer.toString(i),
+                                     "Task failed to load correctly");
+            dates[i]=sdf.parse(
+                prefs.getString("date"+Integer.toString(i),
+                                sdf.format(today)),
+                new ParsePosition(0));
         };
         
         setContentView(R.layout.main);
@@ -49,16 +62,19 @@ public class ToDo extends ListActivity {
         SharedPreferences.Editor ed=prefs.edit();
         ed.putInt("num_tasks", items.length);
         for (int i=0;i<items.length;i++) {
-            ed.putString(Integer.toString(i), items[i]);
+            ed.putString("task"+Integer.toString(i), items[i]);
+            ed.putString("date"+Integer.toString(i), 
+                         sdf.format(dates[i]));
         }
         ed.commit();
     }
     
     public void onListItemClick(ListView parent, View v, 
           int position, long id) {
+        selected_num=position;
         Intent intent=new Intent(this, DefineTask.class);
-        intent.putExtra("position", position);
-        intent.putExtra("items", items);
+        intent.putExtra("task", items[position]);
+        intent.putExtra("date", sdf.format(dates[position]));
         startActivityForResult(intent, 1);
     }
     
@@ -66,12 +82,12 @@ public class ToDo extends ListActivity {
           Intent data) {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                items=data.getExtras().getStringArray("items");
+                items[selected_num]=data.getExtras().getString("task");
+                dates[selected_num]=sdf.parse(
+                      data.getExtras().getString("date"),
+                      new ParsePosition(0));
                 setListAdapter(new ArrayAdapter<String>(this, 
                       android.R.layout.simple_list_item_1, items));
-                //String taskname=data.getStringExtra("taskname");
-                //selected.setText(taskname);
-                //items[selected_num]=taskname;
             }
         }
     }
@@ -103,7 +119,6 @@ public class ToDo extends ListActivity {
     
     private void populateMenu(Menu menu) {
         menu.add(Menu.NONE, ADD_ITEM, Menu.NONE, "Add task");
-        //menu.add(Menu.NONE, 1, Menu.NONE, "Second option");
     }
     
     private void populateContextMenu(Menu menu) {
@@ -114,33 +129,46 @@ public class ToDo extends ListActivity {
         switch (item.getItemId()) {
             case ADD_ITEM:
                 String[] temp=new String[items.length+1];
+                String[] datestrings=new String[dates.length+1];
+                Date[] temp2=new Date[dates.length+1];
                 for (int i=0;i<items.length;i++) {
                     temp[i]=items[i];
+                    temp2[i]=dates[i];
                 };
                 items=temp;
-                int position=items.length-1;
-                items[position]="New task";
+                dates=temp2;
+                selected_num=items.length-1;
+                items[selected_num]="New task";
+                dates[selected_num]=new Date();
+                
                 Intent intent=new Intent(this, DefineTask.class);
-                intent.putExtra("position", position);
-                intent.putExtra("items", items);
+                intent.putExtra("task", items[selected_num]);
+                intent.putExtra("date", 
+                                sdf.format(dates[selected_num]));
                 startActivityForResult(intent, 1);
+                
                 return(true);
             case REMOVE_ITEM:
                 AdapterView.AdapterContextMenuInfo info=
                       (AdapterView.AdapterContextMenuInfo)
                       item.getMenuInfo();
                 selected_num=info.position;
-                String[] temp1=new String[items.length-1];
+                String[] temptasks=new String[items.length-1];
+                Date[] tempdates1=new Date[dates.length-1];
                 int j=0;
                 for (int i=0; i<items.length; i++) {
                     if (i != selected_num) {
-                        temp1[j]=items[i];
+                        temptasks[j]=items[i];
+                        tempdates1[j]=dates[i];
                         j++;
                     };
                 };
-                items=temp1;
+                items=temptasks;
+                dates=tempdates1;
                 setListAdapter(new ArrayAdapter<String>(this, 
                       android.R.layout.simple_list_item_1, items));
+                
+                return(true);
         }
         return(false);
     }

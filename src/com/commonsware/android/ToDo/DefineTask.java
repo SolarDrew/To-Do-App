@@ -5,15 +5,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DefineTask extends Activity {
     String taskname;
     Button btn;
     EditText task;
-    //String oldtaskname;
-    String[] items;
-    int position;
+    DatePicker date;
+    String oldtask;
+    String newtask;
+    Date olddate;
+    Date newdate;
+    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -21,18 +28,23 @@ public class DefineTask extends Activity {
         setContentView(R.layout.task);
         btn=(Button)findViewById(R.id.done);
         task=(EditText)findViewById(R.id.taskname);
-        //oldtaskname=getIntent().getStringExtra("oldtaskname");
-        position=getIntent().getExtras().getInt("position");
-        items=getIntent().getExtras().getStringArray("items");
-        task.setText(items[position]);
+        date=(DatePicker)findViewById(R.id.datepicker);
+        oldtask=getIntent().getExtras().getString("task");
+        olddate=sdf.parse(getIntent().getExtras().getString("date"),
+                          new ParsePosition(0));
+        task.setText(oldtask);
+        date.updateDate(1900+olddate.getYear(), olddate.getMonth(),
+              olddate.getDate());
         
         btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                taskname=task.getText().toString();
+                newtask=task.getText().toString();
                 Intent returnStuff=new Intent();
-                items[position]=taskname;
-                returnStuff.putExtra("items", items);
-                //returnStuff.putExtra("taskname", taskname);
+                newdate=new Date(date.getYear()-1900,
+                                 date.getMonth(),
+                                 date.getDayOfMonth());
+                returnStuff.putExtra("task", newtask);
+                returnStuff.putExtra("date", sdf.format(newdate));
                 setResult(RESULT_OK, returnStuff);
                 finish();
             }

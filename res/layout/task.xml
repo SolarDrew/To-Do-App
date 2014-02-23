@@ -6,9 +6,15 @@
     android:stretchColumns="1">
     <TableRow>
         <TextView
-            android:text="Task to be completed:" />
+            android:text="Task to\nbe completed:" />
         <EditText
             android:id="@+id/taskname"/>
+    </TableRow>
+    <TableRow>
+        <TextView
+            android:text="Date to be\ncompleted by:"/>
+        <DatePicker
+            android:id="@+id/datepicker"/>
     </TableRow>
     <TableRow>
         <Button
