@@ -2,7 +2,7 @@ To-do app versions
 
 v0.1: First working version. User can add, remove and edit names of tasks on a single list. Completed 20/02/14.
 v0.2: Dates associated with tasks. Completed 22/02/14.
-v0.2.1: Pass edit task activity single task and date rather than all of them
+v0.2.1: Pass edit task activity single task and date rather than all of them. Completed 23/02/14.
 v0.2.2: Fix display issues on edit task screen.
 v0.3: Tasks highlighted based on date.
 v0.4: Passed dates reset to today if task isn't removed.
