@@ -29,10 +29,11 @@ public class DefineTask extends Activity {
         btn=(Button)findViewById(R.id.done);
         task=(EditText)findViewById(R.id.taskname);
         date=(DatePicker)findViewById(R.id.datepicker);
-        position=getIntent().getExtras().getInt("position");
         oldtask=getIntent().getExtras().getString("task");
         olddate=sdf.parse(getIntent().getExtras().getString("date"),
                           new ParsePosition(0));
+        //task.setSingleLine(false);
+        //task.setHorizontallyScrolling(false);
         task.setText(oldtask);
         date.updateDate(1900+olddate.getYear(), olddate.getMonth(),
               olddate.getDate());
