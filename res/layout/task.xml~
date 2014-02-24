@@ -1,35 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout 
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:stretchColumns="1">
-    <TableRow>
-        <TextView
-            android:text="Task to\nbe completed:" />
-        <EditText
-            android:id="@+id/taskname"/>
-    </TableRow>
-    <TableRow>
-        <TextView
-            android:id="@+id/testdate"
-            android:layout_span="2"/>
-    </TableRow>
-    <TableRow>
-        <TextView
-            android:id="@+id/testdateints"
-            android:layout_span="2"/>
-    </TableRow>
-    <TableRow>
-        <TextView
-            android:text="Date to be\ncompleted by:"/>
-        <DatePicker
-            android:id="@+id/datepicker"/>
-    </TableRow>
-    <TableRow>
-        <Button
-            android:id="@+id/done"
-            android:text="Done"
-            android:layout_span="2"/>
-    </TableRow>
-</TableLayout>
+    android:layout_height="fill_parent">
+    <TextView
+        android:text="Task to be completed:"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
+    <EditText
+        android:id="@+id/taskname"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:text="Date to be completed by:"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
+    <DatePicker
+        android:id="@+id/datepicker"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
+    <Button
+        android:id="@+id/done"
+        android:text="Done"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
+</LinearLayout>
