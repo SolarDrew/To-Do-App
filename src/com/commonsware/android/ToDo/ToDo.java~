@@ -53,6 +53,16 @@ public class ToDo extends ListActivity {
               android.R.layout.simple_list_item_1, items));
         
         registerForContextMenu(getListView());
+        
+        ListView thislist=getListView();
+        for (int i=0;i<items.length;i++) {
+            Date testdate=dates[i];
+            if (testdate.compareTo(today)<1) {
+                TextView thistask=(TextView)thislist.getChildAt(i);
+                //thistask.setBackgroundColor(i);
+                thistask.setText("test text");
+            };
+        };
     }
     
     protected void onPause() {
@@ -142,8 +152,9 @@ public class ToDo extends ListActivity {
                 dates[selected_num]=new Date();
                 
                 Intent intent=new Intent(this, DefineTask.class);
-                intent.putExtra("task", items[position]);
-                intent.putExtra("date", sdf.format(dates[position]));
+                intent.putExtra("task", items[selected_num]);
+                intent.putExtra("date", 
+                                sdf.format(dates[selected_num]));
                 startActivityForResult(intent, 1);
                 
                 return(true);

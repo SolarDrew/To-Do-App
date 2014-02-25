@@ -53,6 +53,16 @@ public class ToDo extends ListActivity {
               android.R.layout.simple_list_item_1, items));
         
         registerForContextMenu(getListView());
+        
+        ListView thislist=getListView();
+        for (int i=0;i<items.length;i++) {
+            Date testdate=dates[i];
+            if (testdate.compareTo(today)<1) {
+                TextView thistask=(TextView)thislist.getChildAt(i);
+                //thistask.setBackgroundColor(i);
+                //thistask.setText("test text");
+            };
+        };
     }
     
     protected void onPause() {

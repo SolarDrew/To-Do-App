@@ -4,8 +4,9 @@ v0.1: First working version. User can add, remove and edit names of tasks on a s
 v0.2: Dates associated with tasks. Completed 22/02/14.
 v0.2.1: Pass edit task activity single task and date rather than all of them. Completed 23/02/14.
 v0.2.2: Fix display issues on edit task screen. Completed 24/02/14.
-v0.3: Tasks highlighted based on date.
-v0.4: Passed dates reset to today if task isn't removed.
+v0.3: Restructure how dates are associated with tasks - i.e. use TaskWrapper.getView for things.
+v0.4: Tasks highlighted based on date.
+v0.5: Passed dates reset to today if task isn't removed. (Not sure I need this, since I'm judging dates on them being after the current date or not.)
 
 v1.0: Multiple lists. Add, remove and edit lists.
 v1.1: 'Do today' and 'do within a week' buttons on edit task view

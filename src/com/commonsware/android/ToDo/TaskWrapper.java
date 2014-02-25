@@ -17,9 +17,9 @@ public class TaskWrapper extends AdapterWrapper {
         this.ctxt=ctxt;
         this.dates=new Date[delegate.getCount()];
         
-        for (int i=0;i<delegate.getCount();i++) {
-            this.dates[i]=new Date();
-        }
+        //for (int i=0;i<delegate.getCount();i++) {
+        //    this.dates[i]=new Date();
+        //}
     }
     
     public View getView(int position, View convertView, 
