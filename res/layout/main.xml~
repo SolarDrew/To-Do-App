@@ -9,7 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="To-do list #1" />
-    <com.commonsware.android.ToDo.ToDoList
+    <ListView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@android:id/list"
         android:layout_width="fill_parent"
