@@ -14,30 +14,32 @@ import java.util.Date;
 public class TaskWrapper extends AdapterWrapper {
     Context ctxt=null;
     Date[] dates=null;
+    String[] items=null;
     SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
     private SharedPreferences prefs;
+    Date today=new Date();
     
     public TaskWrapper(Context ctxt, ListAdapter delegate) {
         super(delegate);
         
         this.ctxt=ctxt;
+        this.items=new String[delegate.getCount()];
         this.dates=new Date[delegate.getCount()];
         prefs=ctxt.getSharedPreferences("lists", 0);
         
         for (int i=0;i<delegate.getCount();i++) {
+            this.items[i]=prefs.getString("task"+Integer.toString(i),
+                  "Task failed to load correctly");
             this.dates[i]=sdf.parse(
                 prefs.getString("date"+Integer.toString(i),
-                                sdf.format(new Date())),
-                new ParsePosition(0));
+                      sdf.format(new Date())), new ParsePosition(0));
         }
     }
     
     public View getView(int position, View convertView, 
           ViewGroup parent) {
         TextView row=(TextView)convertView;
-        //
         
-        Date today=new Date();
         if (convertView==null) {
             row=(TextView)delegate.getView(position, null, parent); 
             if (dates[position].compareTo(today)<1) {
@@ -48,6 +50,8 @@ public class TaskWrapper extends AdapterWrapper {
                 row.setTextColor(Color.BLACK);
             }
         }
+        
+        row.setText(items[position]);
         
         return(row);
     }
