@@ -1,0 +1,20 @@
+To-do app versions
+
+v0.1 (1): First working version. User can add, remove and edit names of tasks on a single list. Completed 20/02/14.
+v0.2 (2): Dates associated with tasks. Completed 22/02/14.
+v0.2.1 (3): Pass edit task activity single task and date rather than all of them. Completed 23/02/14.
+v0.2.2 (4): Fix display issues on edit task screen. Completed 24/02/14.
+v0.3 (5): Tasks highlighted based on date. Completed 26/2/14.
+v0.3.1(6): Fix bug causing tasks not to be displayed properly. Completed 28/02/14.
+v0.3.2 (7): Task views tagged with dates so the date list only needs to be read in from the preferences once.
+v0.3.3 (8): Task dates updated in TaskWrapped class when changed on edit task screen.
+v0.4 (9): Passed dates reset to today if task isn't removed. (Not sure I need this, since I'm judging dates on them being after the current date or not.)
+
+v1.0: Multiple lists. Add, remove and edit lists. Navigate lists from main screen/menu.
+v1.1: Navigate lists by swiping.
+v1.2: 'Do today' and 'do within a week' buttons on edit task view
+v1.3: Tasks automatically added to 'do today' and 'do this week' lists
+
+v2.0: Widget available for home screen
+
+v3.0: App syncs across devices?
