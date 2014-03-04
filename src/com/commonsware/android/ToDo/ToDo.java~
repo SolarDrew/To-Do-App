@@ -41,10 +41,10 @@ public class ToDo extends ListActivity {
         for (int i=0;i<items.length;i++) {
             items[i]=prefs.getString("task"+Integer.toString(i),
                                      "Task failed to load correctly");
-            //dates[i]=sdf.parse(
-            //    prefs.getString("date"+Integer.toString(i),
-            //                    sdf.format(today)),
-            //    new ParsePosition(0));
+            dates[i]=sdf.parse(
+                prefs.getString("date"+Integer.toString(i),
+                                sdf.format(today)),
+                new ParsePosition(0));
         };
         
         setContentView(R.layout.main);

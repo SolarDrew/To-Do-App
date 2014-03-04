@@ -23,6 +23,7 @@ public class ToDo extends ListActivity {
     int num_lists=1;
     int selected_num;
     private SharedPreferences prefs;
+    String listname;
     String[] items;
     Date[] dates;
     String[] datestrings;
@@ -34,7 +35,8 @@ public class ToDo extends ListActivity {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        prefs=getSharedPreferences("lists", 0);
+        listname=getIntent().getExtras().getString("listname");
+        prefs=getSharedPreferences(listname, 1);
         int ntasks=prefs.getInt("num_tasks", 1);
         items=new String[ntasks];
         dates=new Date[ntasks];
