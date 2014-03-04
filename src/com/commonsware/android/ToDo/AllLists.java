@@ -78,19 +78,19 @@ public class AllLists extends ListActivity {
         startActivityForResult(intent, 0);
     }
     
-    /*protected void onActivityResult(int requestCode, int resultCode, 
+    protected void onActivityResult(int requestCode, int resultCode, 
           Intent data) {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                items[selected_num]=data.getExtras().getString("task");
-                dates[selected_num]=sdf.parse(
-                      data.getExtras().getString("date"),
-                      new ParsePosition(0));
+                lists[selected_num]=data.getExtras().getString("task");
+                //dates[selected_num]=sdf.parse(
+                //      data.getExtras().getString("date"),
+                //      new ParsePosition(0));
                 setListAdapter(new ArrayAdapter<String>(this, 
                       android.R.layout.simple_list_item_1, items));
             }
         }
-    }*/
+    }
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
