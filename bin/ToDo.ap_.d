@@ -1,6 +1,7 @@
 /home/drew/my_android_apps/To-Do-App/bin/ToDo.ap_ \
  : /home/drew/my_android_apps/To-Do-App/res/drawable-xhdpi/ic_launcher.png \
 /home/drew/my_android_apps/To-Do-App/res/layout/main.xml \
+/home/drew/my_android_apps/To-Do-App/res/layout/mainlists.xml \
 /home/drew/my_android_apps/To-Do-App/res/layout/task.xml \
 /home/drew/my_android_apps/To-Do-App/res/drawable-mdpi/ic_launcher.png \
 /home/drew/my_android_apps/To-Do-App/res/drawable-hdpi/ic_launcher.png \

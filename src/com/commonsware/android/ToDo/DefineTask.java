@@ -16,10 +16,8 @@ public class DefineTask extends Activity {
     Button btn;
     EditText task;
     DatePicker date;
-    String oldtask;
-    String newtask;
-    Date olddate;
-    Date newdate;
+    String oldtask, newtask;
+    Date olddate, newdate;
     SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 
     @Override

@@ -42,7 +42,7 @@ public class ToDo extends ListActivity {
         dates=new Date[ntasks];
         for (int i=0;i<items.length;i++) {
             items[i]=prefs.getString("task"+Integer.toString(i),
-                                     "Task failed to load correctly");
+                                     "New task");
             dates[i]=sdf.parse(
                 prefs.getString("date"+Integer.toString(i),
                                 sdf.format(today)),
@@ -50,6 +50,8 @@ public class ToDo extends ListActivity {
         };
         
         setContentView(R.layout.main);
+        TextView title=(TextView)findViewById(R.id.list_title);
+        title.setText(listname);
         
         setListAdapter(new ArrayAdapter<String>(this, 
               android.R.layout.simple_list_item_1, items));
@@ -60,7 +62,7 @@ public class ToDo extends ListActivity {
     protected void onPause() {
         super.onPause();
         
-        prefs=getSharedPreferences("lists", 0);
+        prefs=getSharedPreferences(listname, 1);
         SharedPreferences.Editor ed=prefs.edit();
         ed.putInt("num_tasks", items.length);
         for (int i=0;i<items.length;i++) {

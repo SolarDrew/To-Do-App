@@ -7,7 +7,7 @@ v0.2.2 (4): Fix display issues on edit task screen. Completed 24/02/14.
 v0.3 (5): Tasks highlighted based on date. Completed 26/2/14.
 v0.3.1(6): Fix bug causing tasks not to be displayed properly. Completed 28/02/14.
 
-v1.0 (8): Multiple lists. Add, remove and edit lists. Navigate lists from main screen/menu.
+v1.0 (7): Multiple lists. Add, remove and edit lists. Navigate lists from main screen/menu.
 v1.0.1 (8): Task views tagged with dates so the date list only needs to be read in from the preferences once.
 v1.0.2 (9): Task dates updated in TaskWrapped class when changed on edit task screen.
 v1.0.3 (10): Passed dates reset to today if task isn't removed. (Not sure I need this, since I'm judging dates on them being after the current date or not.)

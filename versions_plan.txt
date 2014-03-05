@@ -8,9 +8,10 @@ v0.3 (5): Tasks highlighted based on date. Completed 26/2/14.
 v0.3.1(6): Fix bug causing tasks not to be displayed properly. Completed 28/02/14.
 
 v1.0 (7): Multiple lists. Add, remove and edit lists. Navigate lists from main screen/menu.
-v1.0.1 (8): Task views tagged with dates so the date list only needs to be read in from the preferences once.
-v1.0.2 (9): Task dates updated in TaskWrapped class when changed on edit task screen.
-v1.0.3 (10): Passed dates reset to today if task isn't removed. (Not sure I need this, since I'm judging dates on them being after the current date or not.)
+v1.0.1 (8): Fix bug that forces the app to close if launched from the android unlock screen.
+v1.0.2 (9): Task views tagged with dates so the date list only needs to be read in from the preferences once.
+v1.0.3 (10): Task dates updated in TaskWrapped class when changed on edit task screen.
+v1.0.4 (11): Passed dates reset to today if task isn't removed. (Not sure I need this, since I'm judging dates on them being after the current date or not.)
 v1.1: Navigate lists by swiping.
 v1.2: 'Do today' and 'do within a week' buttons on edit task view
 v1.3: Tasks automatically added to 'do today' and 'do this week' lists

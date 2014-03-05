@@ -16,7 +16,7 @@ public class TaskWrapper extends AdapterWrapper {
     Date[] dates=null;
     String[] items=null;
     SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-    private SharedPreferences prefs;
+    private SharedPreferences prefs, listprefs;
     Date today=new Date();
     
     public TaskWrapper(Context ctxt, ListAdapter delegate) {
@@ -25,7 +25,10 @@ public class TaskWrapper extends AdapterWrapper {
         this.ctxt=ctxt;
         this.items=new String[delegate.getCount()];
         this.dates=new Date[delegate.getCount()];
-        prefs=ctxt.getSharedPreferences("lists", 0);
+        listprefs=ctxt.getSharedPreferences("lists", 1);
+        String listname=listprefs.getString("currentlist",
+              "Empty List");
+        prefs=ctxt.getSharedPreferences(listname, 0);
         
         for (int i=0;i<delegate.getCount();i++) {
             this.items[i]=prefs.getString("task"+Integer.toString(i),

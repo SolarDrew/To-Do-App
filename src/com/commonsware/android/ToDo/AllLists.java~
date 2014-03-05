@@ -22,11 +22,9 @@ public class AllLists extends ListActivity {
     TextView selected;
     int selected_num;
     private SharedPreferences prefs;
-    String[] items;
-    //Date[] dates;
-    //String[] datestrings;
+    String[] lists;
     Date today=new Date();
-    //SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
     public static final int ADD_LIST=0;
     public static final int REMOVE_LIST=1;
 
@@ -35,21 +33,18 @@ public class AllLists extends ListActivity {
         super.onCreate(icicle);
         prefs=getSharedPreferences("lists", 0);
         int nlists=prefs.getInt("num_lists", 1);
-        lists=new String[nlists];
-        //dates=new Date[ntasks];
+        lists=new String[5];//nlists];
         for (int i=0;i<lists.length;i++) {
             lists[i]=prefs.getString("list"+Integer.toString(i),
                                      "Empty list");
-            //dates[i]=sdf.parse(
-            //    prefs.getString("date"+Integer.toString(i),
-            //                    sdf.format(today)),
-            //    new ParsePosition(0));
         };
         
-        setContentView(R.layout.main);
-        
+        setContentView(R.layout.mainlists);
+        TextView title=(TextView)findViewById(R.id.list_title);
+        title.setText("To-do lists");
+
         setListAdapter(new ArrayAdapter<String>(this, 
-              android.R.layout.simple_list_item_1, items));
+              android.R.layout.simple_list_item_1, lists));
         
         registerForContextMenu(getListView());
     }
@@ -59,11 +54,9 @@ public class AllLists extends ListActivity {
         
         prefs=getSharedPreferences("lists", 0);
         SharedPreferences.Editor ed=prefs.edit();
-        ed.putInt("num_tasks", lists.length);
+        ed.putInt("num_lists", lists.length);
         for (int i=0;i<lists.length;i++) {
             ed.putString("list"+Integer.toString(i), lists[i]);
-            //ed.putString("date"+Integer.toString(i), 
-            //             sdf.format(dates[i]));
         }
         ed.commit();
     }
@@ -72,25 +65,24 @@ public class AllLists extends ListActivity {
           int position, long id) {
         //selected_num=position;
         Intent intent=new Intent(this, ToDo.class);
-        //intent.putExtra("task", items[position]);
-        //intent.putExtra("date", sdf.format(dates[position]));
         intent.putExtra("listname", lists[position]);
+        prefs=getSharedPreferences("lists", 0);
+        SharedPreferences.Editor ed=prefs.edit();
+        ed.putString("currentlist", lists[position]);
+        ed.commit();
         startActivityForResult(intent, 0);
     }
     
-    /*protected void onActivityResult(int requestCode, int resultCode, 
+    protected void onActivityResult(int requestCode, int resultCode, 
           Intent data) {
-        if (requestCode == 1) {
+        if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
-                items[selected_num]=data.getExtras().getString("task");
-                dates[selected_num]=sdf.parse(
-                      data.getExtras().getString("date"),
-                      new ParsePosition(0));
+                lists[selected_num]=data.getExtras().getString("task");
                 setListAdapter(new ArrayAdapter<String>(this, 
-                      android.R.layout.simple_list_item_1, items));
+                      android.R.layout.simple_list_item_1, lists));
             }
         }
-    }*/
+    }
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -118,11 +110,11 @@ public class AllLists extends ListActivity {
     }
     
     private void populateMenu(Menu menu) {
-        menu.add(Menu.NONE, ADD_ITEM, Menu.NONE, "Add list");
+        menu.add(Menu.NONE, ADD_LIST, Menu.NONE, "Add list");
     }
     
     private void populateContextMenu(Menu menu) {
-        menu.add(Menu.NONE, REMOVE_ITEM, Menu.NONE, "Remove list");
+        menu.add(Menu.NONE, REMOVE_LIST, Menu.NONE, "Remove list");
     }
     
     private boolean applyMenuChoice(MenuItem item) {
@@ -137,13 +129,13 @@ public class AllLists extends ListActivity {
                 };
                 lists=temp;
                 //dates=temp2;
-                selected_num=items.length-1;
-                items[selected_num]="New list";
+                selected_num=lists.length-1;
+                lists[selected_num]="New list";
                 //dates[selected_num]=new Date();
                 
                 Intent intent=new Intent(this, DefineTask.class);
-                intent.putExtra("task", list[selected_num]);
-                intent.putExtra("date", today);
+                intent.putExtra("task", lists[selected_num]);
+                intent.putExtra("date", sdf.format(today));
                                 //sdf.format(dates[selected_num]));
                 startActivityForResult(intent, 1);
                 
@@ -166,7 +158,7 @@ public class AllLists extends ListActivity {
                 lists=templists;
                 //dates=tempdates1;
                 setListAdapter(new ArrayAdapter<String>(this, 
-                      android.R.layout.simple_list_item_1, items));
+                      android.R.layout.simple_list_item_1, lists));
                 
                 return(true);
         }
