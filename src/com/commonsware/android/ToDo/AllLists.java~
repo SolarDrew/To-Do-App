@@ -33,7 +33,7 @@ public class AllLists extends ListActivity {
         super.onCreate(icicle);
         prefs=getSharedPreferences("lists", 0);
         int nlists=prefs.getInt("num_lists", 1);
-        lists=new String[5];//nlists];
+        lists=new String[nlists];
         for (int i=0;i<lists.length;i++) {
             lists[i]=prefs.getString("list"+Integer.toString(i),
                                      "Empty list");

@@ -75,7 +75,7 @@ public class AllLists extends ListActivity {
     
     protected void onActivityResult(int requestCode, int resultCode, 
           Intent data) {
-        if (requestCode == 0) {
+        if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 lists[selected_num]=data.getExtras().getString("task");
                 setListAdapter(new ArrayAdapter<String>(this, 
